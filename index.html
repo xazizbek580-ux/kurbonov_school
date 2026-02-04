@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurbonov Math - Zamonaviy O'quv Markazi</title>
+    <meta name="description" content="Kurbonov Math - Matematika, Fizika va Ingliz tili bo'yicha sifatli ta'lim. Abituriyentlar tayyorlash markazi.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles for Animations and Specific UI elements -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #2563eb;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e40af;
+        }
+
+        /* Custom Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Navbar Glass Effect */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Card Hover Effects */
+        .course-card {
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Accordion Styles */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Blob Background Animation */
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: 0;
+            animation: move 10s infinite alternate;
+        }
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        /* Floating Button */
+        .floating-btn {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white shadow-md">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Section -->
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="bg-blue-600 text-white p-2.5 rounded-xl group-hover:bg-blue-700 transition duration-300">
+                        <!-- Calculator Icon SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                            <line x1="8" y1="6" x2="16" y2="6"></line>
+                            <line x1="16" y1="14" x2="16" y2="14"></line>
+                            <line x1="16" y1="18" x2="16" y2="18"></line>
+                            <line x1="10" y1="10" x2="10" y2="10"></line>
+                            <line x1="8" y1="14" x2="8" y2="14"></line>
+                            <line x1="8" y1="18" x2="8" y2="18"></line>
+                        </svg>
+                    </div>
+                    <span class="text-xl md:text-2xl font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition">Kurbonov<span class="text-blue-600">_Math</span></span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300 border-b-2 border-transparent hover:border-blue-600 py-1">Bosh sahifa</a>
+                    <a href="#courses" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300 border-b-2 border-transparent hover:border-blue-600 py-1">Kurslar</a>
+                    <a href="#about" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300 border-b-2 border-transparent hover:border-blue-600 py-1">Biz haqimizda</a>
+                    <a href="#results" class="text-gray-600 hover:text-blue-600 font-medium transition duration-300 border-b-2 border-transparent hover:border-blue-600 py-1">Natijalar</a>
+                    <a href="#contact" class="bg-blue-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-0.5">Bog'lanish</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-gray-600 hover:text-blue-600 focus:outline-none p-2">
+                        <!-- Menu Icon -->
+                        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                            <line x1="4" y1="6" x2="20" y2="6"></line>
+                            <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
+                        <!-- Close Icon (Hidden by default) -->
+                        <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#home" class="mobile-link block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition">Bosh sahifa</a>
+                <a href="#courses" class="mobile-link block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition">Kurslar</a>
+                <a href="#about" class="mobile-link block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition">Biz haqimizda</a>
+                <a href="#results" class="mobile-link block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition">Natijalar</a>
+                <a href="#contact" class="mobile-link block px-3 py-3 mt-4 text-center rounded-lg text-base font-bold text-white bg-blue-600 hover:bg-blue-700 transition shadow-md">Darsga yozilish</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-blue-900">
+        <!-- Background Patterns -->
+        <div class="absolute inset-0 z-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="blob w-96 h-96 bg-blue-500 rounded-full opacity-20 top-0 left-0"></div>
+        <div class="blob w-96 h-96 bg-purple-500 rounded-full opacity-20 bottom-0 right-0 animation-delay-2000"></div>
+
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-800 text-blue-200 text-sm font-semibold mb-6 border border-blue-700 fade-in-up">
+                🚀 2024-2025 o'quv yili uchun qabul boshlandi
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-8 leading-tight tracking-tight fade-in-up" style="animation-delay: 0.1s;">
+                Matematikani <span class="text-yellow-400 relative inline-block">
+                    Kurbonov
+                    <svg class="absolute w-full h-3 -bottom-1 left-0 text-yellow-400 opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none">
+                        <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="2" fill="none" />
+                    </svg>
+                </span> <br class="hidden md:block" /> bilan oson o'rganing!
+            </h1>
+            <p class="text-lg md:text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed fade-in-up" style="animation-delay: 0.2s;">
+                Nufuzli universitetlarga kirishni maqsad qilganmisiz? Bizning individual yondashuv va maxsus metodikamiz orqali 100% natijaga erishing.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 fade-in-up" style="animation-delay: 0.3s;">
+                <a href="#contact" class="floating-btn bg-yellow-400 text-blue-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-300 transition shadow-xl hover:shadow-yellow-400/50 flex items-center justify-center gap-2">
+                    <span>Hozir boshlash</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <a href="#courses" class="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-blue-900 transition flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    <span>Kurslarni ko'rish</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-10 -mt-16 relative z-20 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-gray-100">
+                    <div class="text-center p-2">
+                        <div class="text-4xl md:text-5xl font-bold text-blue-600 mb-2 counter" data-target="7">0</div>
+                        <div class="text-gray-500 font-medium text-sm md:text-base uppercase tracking-wide">Yillik Tajriba</div>
+                    </div>
+                    <div class="text-center p-2">
+                        <div class="text-4xl md:text-5xl font-bold text-blue-600 mb-2 counter" data-target="500">0</div>
+                        <div class="text-gray-500 font-medium text-sm md:text-base uppercase tracking-wide">Bitiruvchilar</div>
+                    </div>
+                    <div class="text-center p-2">
+                        <div class="text-4xl md:text-5xl font-bold text-blue-600 mb-2 counter" data-target="95">0</div>
+                        <div class="text-gray-500 font-medium text-sm md:text-base uppercase tracking-wide">Kirish ko'rsatkichi %</div>
+                    </div>
+                    <div class="text-center p-2">
+                        <div class="text-4xl md:text-5xl font-bold text-blue-600 mb-2 counter" data-target="100">0</div>
+                        <div class="text-gray-500 font-medium text-sm md:text-base uppercase tracking-wide">Sifat Kafolati %</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 fade-in-up">Nega aynan <span class="text-blue-600">Kurbonov Math?</span></h2>
+                <div class="w-24 h-1.5 bg-blue-600 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600 text-lg fade-in-up">Biz shunchaki fan o'rgatmaymiz, biz fikrlashni, tahlil qilishni va muammolarga yechim topishni o'rgatamiz.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-blue-50 rounded-2xl p-8 text-center hover:bg-blue-100 transition duration-300 fade-in-up">
+                    <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-600/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Kafolatlangan Natija</h3>
+                    <p class="text-gray-600">Bizning metodikamiz bo'yicha to'liq tayyorlangan o'quvchilarning 95% i oliy o'quv yurtlariga byudjet asosida qabul qilinadi.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-purple-50 rounded-2xl p-8 text-center hover:bg-purple-100 transition duration-300 fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-purple-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-purple-600/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Kichik Guruhlar</h3>
+                    <p class="text-gray-600">Har bir o'quvchi bilan individual ishlash imkonini beruvchi 10-12 kishilik kichik guruhlarda darslar olib boriladi.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-green-50 rounded-2xl p-8 text-center hover:bg-green-100 transition duration-300 fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-green-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-600/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Doimiy Nazorat</h3>
+                    <p class="text-gray-600">Har oy o'tkaziladigan DTM formatidagi test sinovlari orqali o'quvchining o'sish darajasi doimiy nazorat qilinadi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div class="max-w-2xl">
+                    <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">Bizning yo'nalishlar</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Sizga mos kursni tanlang</h2>
+                </div>
+                <div class="hidden md:block">
+                   <a href="#contact" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center gap-2">
+                       Barcha kurslar ro'yxati 
+                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                   </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Course 1 -->
+                <div class="course-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">TOP KURS</div>
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6 group-hover:scale-110 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="14"></line><line x1="16" y1="18" x2="16" y2="18"></line><line x1="10" y1="10" x2="10" y2="10"></line><line x1="8" y1="14" x2="8" y2="14"></line><line x1="8" y1="18" x2="8" y2="18"></line></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Matematika</h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-3">Abituriyentlar uchun noldan boshlab murakkab masalalargacha o'rgatuvchi fundamental kurs. DTM standartlari asosida.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-sm font-medium text-gray-500">Davomiyligi: 10 oy</span>
+                        <a href="#contact" class="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-6 group-hover:scale-110 transition duration-300">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Mental Arifmetika</h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-3">5 yoshdan 12 yoshgacha bo'lgan bolalar uchun aqliy salohiyatni va xotirani rivojlantirish kursi.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-sm font-medium text-gray-500">Yosh: 5-12</span>
+                        <a href="#contact" class="text-purple-600 hover:text-purple-800 p-2 rounded-full hover:bg-purple-50 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="course-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-6 group-hover:scale-110 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Fizika</h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-3">Nazariy qonunlar va amaliy masalalar yechimi. Texnika yo'nalishidagi OTMlarga kiruvchilar uchun.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-sm font-medium text-gray-500">Davomiyligi: 9 oy</span>
+                        <a href="#contact" class="text-green-600 hover:text-green-800 p-2 rounded-full hover:bg-green-50 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 4 -->
+                <div class="course-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center text-red-600 mb-6 group-hover:scale-110 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ingliz Tili</h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-3">General English va IELTS tayyorgarligi. Grammatika, Reading, Listening va Speaking darslari.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-sm font-medium text-gray-500">IELTS 7.0+</span>
+                        <a href="#contact" class="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-50 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teacher Section -->
+    <section class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <!-- Image side -->
+                <div class="w-full md:w-1/2 relative fade-in-up">
+                    <div class="absolute inset-0 bg-blue-600 rounded-[3rem] transform -rotate-6 opacity-10 scale-95 translate-y-4"></div>
+                    <div class="absolute inset-0 bg-yellow-400 rounded-[3rem] transform rotate-3 opacity-20 scale-95 translate-x-4"></div>
+                    
+                    <div class="relative bg-gray-100 rounded-[2.5rem] overflow-hidden aspect-[4/5] flex items-center justify-center shadow-2xl border-4 border-white">
+                        <!-- Teacher SVG Placeholder -->
+                         <div class="flex flex-col items-center justify-center text-gray-400">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                             <span class="mt-4 text-xl font-bold text-gray-500">Ustoz Rasmi</span>
+                         </div>
+                         
+                         <!-- Name Card Overlay -->
+                         <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/50">
+                             <h4 class="text-xl font-bold text-gray-900">Kurbonov X.</h4>
+                             <p class="text-blue-600 text-sm font-semibold">Asoschi va Bosh Mentor</p>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- Content side -->
+                <div class="w-full md:w-1/2 fade-in-up" style="animation-delay: 0.2s;">
+                    <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">Jamoa</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+                        Malakali ustozlardan sifatli ta'lim oling
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                        Markazimiz asoschisi va matematika fani o'qituvchisi Kurbonov domla o'zining 7 yillik tajribasi davomida minglab o'quvchilarga matematika sirlarini o'rgatib kelmoqda.
+                    </p>
+                    
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">Zamonaviy metodika</h4>
+                                <p class="text-gray-500">Murakkab mavzularni sodda tilda va vizual usullar bilan tushuntirish.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">Individual yondashuv</h4>
+                                <p class="text-gray-500">Har bir o'quvchining bilim darajasiga qarab alohida e'tibor.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-bold text-gray-900">Motivatsiya</h4>
+                                <p class="text-gray-500">Darslar nafaqat bilim, balki kuchli motivatsiya va o'ziga ishonch beradi.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://t.me/kurbonov_math" target="_blank" class="inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-500/40">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Telegramdan yozish
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results/Testimonials Section -->
+    <section id="results" class="py-20 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-blue-400 font-bold tracking-wider uppercase text-sm mb-2 block">Natijalar</span>
+                <h2 class="text-3xl md:text-4xl font-bold">O'quvchilarimizning yutuqlari</h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Bizning eng katta yutug'imiz - bu o'quvchilarimizning talaba bo'lish baxtiga muyassar bo'lishlaridir.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-blue-500 transition duration-300">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-xl font-bold">A</div>
+                        <div>
+                            <h4 class="font-bold">Azizbek Tursunov</h4>
+                            <p class="text-sm text-blue-400">Westminster Universiteti</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"Kurbonov Math da o'qib, matematikadan bilimimni noldan boshlab yuqori darajaga olib chiqdim. Darslar juda qiziqarli va tushunarli o'tiladi. Tavsiya qilaman!"</p>
+                    <div class="flex text-yellow-400 mt-4">
+                        ★★★★★
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-blue-500 transition duration-300 transform md:-translate-y-4 shadow-xl">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-xl font-bold">M</div>
+                        <div>
+                            <h4 class="font-bold">Madina Karimova</h4>
+                            <p class="text-sm text-purple-400">Jahon iqtisodiyoti va diplomatiya</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"Bu yerdagi muhit insonni o'qishga undaydi. Har bir mavzu hayotiy misollar bilan tushuntiriladi. DTM testlarida 100% natija ko'rsatdim."</p>
+                    <div class="flex text-yellow-400 mt-4">
+                        ★★★★★
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-blue-500 transition duration-300">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-xl font-bold">J</div>
+                        <div>
+                            <h4 class="font-bold">Jasur Aliyev</h4>
+                            <p class="text-sm text-green-400">TATU</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"Fizika va matematika kurslariga qatnadim. O'qituvchilarning talabchanligi va doimiy nazorat sababli byudjetga kirdim. Rahmat sizlarga!"</p>
+                    <div class="flex text-yellow-400 mt-4">
+                        ★★★★★
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#contact" class="inline-block border border-gray-600 hover:border-white text-gray-300 hover:text-white px-8 py-3 rounded-full transition">Barcha natijalarni ko'rish</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Ko'p so'raladigan savollar</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-6 text-left bg-gray-50 hover:bg-gray-100 transition focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-gray-800">Darslar qaysi vaqtlarda bo'ladi?</span>
+                        <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content bg-white">
+                        <div class="p-6 text-gray-600 border-t border-gray-100">
+                            Darslarimiz o'quvchilarning maktab vaqtiga moslashgan holda ertalabki va tushdan keyingi smenalarda tashkil etilgan. Aniq jadvalni administrator orqali bilib olishingiz mumkin.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-6 text-left bg-gray-50 hover:bg-gray-100 transition focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-gray-800">Birinchi dars bepulmi?</span>
+                        <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content bg-white">
+                        <div class="p-6 text-gray-600 border-t border-gray-100">
+                            Ha, albatta! Bizda birinchi sinov darsi mutlaqo bepul. Bu darsda siz o'qituvchining metodikasi bilan tanishishingiz va o'zingizga mos guruhni tanlashingiz mumkin.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="accordion-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-6 text-left bg-gray-50 hover:bg-gray-100 transition focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-gray-800">Guruhda nechta o'quvchi bo'ladi?</span>
+                        <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content bg-white">
+                        <div class="p-6 text-gray-600 border-t border-gray-100">
+                            Sifatni saqlab qolish maqsadida guruhlarimizda o'quvchilar soni 10-12 kishidan oshmaydi. Bu har bir o'quvchi bilan individual shug'ullanish imkonini beradi.
+                        </div>
+                    </div>
+                </div>
+                
+                 <!-- FAQ Item 4 -->
+                <div class="accordion-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="w-full flex justify-between items-center p-6 text-left bg-gray-50 hover:bg-gray-100 transition focus:outline-none" onclick="toggleAccordion(this)">
+                        <span class="font-bold text-gray-800">Online o'qish imkoniyati bormi?</span>
+                        <svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content bg-white">
+                        <div class="p-6 text-gray-600 border-t border-gray-100">
+                            Hozirgi kunda bizda asosan offline (jonli) darslar olib boriladi. Lekin, masofadan turib o'qishni xohlovchilar uchun maxsus videodarslar platformasi ishlab chiqilmoqda.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-blue-600 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-500 rounded-full opacity-50 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-700 rounded-full opacity-50 blur-3xl"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-5xl mx-auto flex flex-col md:flex-row">
+                <!-- Info Side -->
+                <div class="w-full md:w-5/12 bg-gray-900 p-10 text-white flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Bog'lanish uchun ma'lumotlar</h3>
+                        <p class="text-gray-400 mb-8">Savollaringiz bormi? Biz bilan bog'laning yoki formani to'ldiring, biz sizga aloqaga chiqamiz.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-400 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg">Telefon</h4>
+                                    <p class="text-gray-400">+998 99 225 26 00</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-pink-600/20 rounded-lg flex items-center justify-center text-pink-400 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg">Instagram</h4>
+                                    <p class="text-gray-400" url="https://www.instagram.com/asliddin_kurbonov_?igsh=d2ppemk2eTQzc3Zh">@kurbonov_math</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-blue-400/20 rounded-lg flex items-center justify-center text-blue-400 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg">Telegram</h4>
+                                    <p class="text-gray-400">@asliddin_kurbonov </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-green-400/20 rounded-lg flex items-center justify-center text-green-400 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-lg">Manzil</h4>
+                                    <p class="text-gray-400">navbahor tuman,Yangiqo'rg'on</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 pt-8 border-t border-gray-800">
+                        <p class="text-sm text-gray-500">Ijtimoiy tarmoqlarda bizni kuzating</p>
+                        <div class="flex gap-4 mt-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 transition"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Side -->
+                <div class="w-full md:w-7/12 bg-white p-10">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Bepul konsultatsiya oling</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Ismingiz</label>
+                                <input type="text" id="name" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="Ahror">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Telefon raqamingiz</label>
+                                <input type="tel" id="phone" required class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="+998 90 123 45 67">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="course" class="block text-sm font-medium text-gray-700 mb-2">Qaysi kursga qiziqasiz?</label>
+                            <select id="course" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition cursor-pointer">
+                                <option value="" disabled selected>Tanlang</option>
+                                <option value="math">Matematika</option>
+                                <option value="physics">Fizika</option>
+                                <option value="english">Ingliz Tili</option>
+                                <option value="mental">Mental Arifmetika</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Xabar (ixtiyoriy)</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="Sizni qiziqtirgan qo'shimcha savollar..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition transform hover:scale-[1.01] active:scale-[0.99] shadow-lg">
+                            Yuborish
+                        </button>
+                        
+                        <p class="text-xs text-gray-500 mt-4 text-center">
+                            "Yuborish" tugmasini bosish orqali siz shaxsiy ma'lumotlaringizni qayta ishlashga rozilik bildirasiz.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-gray-400 py-12 border-t border-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="#" class="flex items-center gap-2 mb-4 text-white">
+                         <div class="bg-blue-600 p-1.5 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="14"></line></svg>
+                         </div>
+                        <span class="text-xl font-bold">Kurbonov_Math</span>
+                    </a>
+                    <p class="text-sm leading-relaxed mb-4">
+                        Sifatli ta'lim - kelajak poydevori. Biz bilan orzularingiz sari ishonchli qadam tashlang.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">Kurslar</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-blue-500 transition">Matematika</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition">Fizika</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition">Ingliz Tili</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition">Mental Arifmetika</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">Tezkor havolalar</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#about" class="hover:text-blue-500 transition">Biz haqimizda</a></li>
+                        <li><a href="#teacher" class="hover:text-blue-500 transition">O'qituvchilar</a></li>
+                        <li><a href="#results" class="hover:text-blue-500 transition">Natijalar</a></li>
+                        <li><a href="#faq" class="hover:text-blue-500 transition">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">Aloqa</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center gap-2">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            +998 90 123 45 67
+                        </li>
+                         <li class="flex items-center gap-2">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Toshkent sh., Chilonzor
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+                <p>&copy; 2024 Kurbonov Math. Barcha huquqlar himoyalangan.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">Maxfiylik siyosati</a>
+                    <a href="#" class="hover:text-white transition">Foydalanish shartlari</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-blue-700 z-40">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <!-- JavaScript logic for interactivity -->
+    <script>
+        // --- 1. Preloader Logic ---
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        });
+
+        // --- 2. Mobile Menu Logic ---
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Close menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
+
+        // --- 3. Navbar Scroll Effect ---
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav');
+                navbar.classList.remove('h-20');
+                navbar.classList.add('h-16');
+            } else {
+                navbar.classList.remove('glass-nav');
+                navbar.classList.remove('h-16');
+                navbar.classList.add('h-20');
+            }
+        });
+
+        // --- 4. Scroll to Top Button ---
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.remove('opacity-0', 'invisible');
+                scrollTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'invisible');
+                scrollTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // --- 5. Number Counter Animation ---
+        const counters = document.querySelectorAll('.counter');
+        let hasCounted = false;
+
+        function runCounters() {
+            counters.forEach(counter => {
+                counter.innerText = '0';
+                const target = +counter.getAttribute('data-target');
+                const increment = target / 100; // Speed adjustment
+
+                const updateCounter = () => {
+                    const c = +counter.innerText;
+                    if (c < target) {
+                        counter.innerText = Math.ceil(c + increment);
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        counter.innerText = target + (target === 95 || target === 100 ? '%' : '+');
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // --- 6. Intersection Observer for Animations ---
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Trigger fade-in animations
+                    if (entry.target.classList.contains('fade-in-up')) {
+                        entry.target.classList.add('visible');
+                    }
+                    
+                    // Trigger counter animation once
+                    if (entry.target.querySelector('.counter') && !hasCounted) {
+                        runCounters();
+                        hasCounted = true;
+                    }
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        // Observe the stats section specifically for counters
+        const statsSection = document.querySelector('.counter').closest('section');
+        if(statsSection) observer.observe(statsSection);
+
+
+        // --- 7. FAQ Accordion Logic ---
+        function toggleAccordion(button) {
+            const item = button.parentElement;
+            const content = button.nextElementSibling;
+            
+            // Close other items (optional - accordion style)
+            const allItems = document.querySelectorAll('.accordion-item');
+            allItems.forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                }
+            });
+
+            // Toggle current item
+            item.classList.toggle('active');
+        }
+
+        // --- 8. Form Submission Handling ---
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const course = document.getElementById('course').value;
+            const message = document.getElementById('message').value;
+
+            // Simple validation visualization
+            const btn = event.target.querySelector('button');
+            const originalText = btn.innerText;
+            
+            btn.innerText = 'Yuborilmoqda...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+
+            // Simulate API call
+            setTimeout(() => {
+                alert(`Rahmat, ${name}! So'rovingiz qabul qilindi.\nTez orada ${phone} raqamiga aloqaga chiqamiz.`);
+                
+                // Reset form
+                event.target.reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75');
+            }, 1500);
+        }
+
+        // --- 9. Smooth Scroll for Anchor Links ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = 80;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
